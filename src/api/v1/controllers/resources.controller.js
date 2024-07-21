@@ -39,10 +39,10 @@ export async function post(req, res) {
     fs.mkdirSync(path.resolve(resourcesDir, resourceID));
 
     let infoFileContents = JSON.stringify({
-        "name": "My Asset",
-        "type": "ctpreset",
-        "author": "Anonymous",
-        "description": "Asset created by a Lunal Graphics user",
+        "name": req.body["name"],
+        "type": req.body["type"],
+        "author": req.body["author"],
+        "description": req.body["description"],
         "goldStar": false
     });
     fs.writeFileSync(path.resolve(resourcesDir, resourceID, "info.json"), infoFileContents, "utf-8");
