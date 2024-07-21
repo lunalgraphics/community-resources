@@ -1,0 +1,17 @@
+{
+  "name": "lunalgraphics-communityresources",
+  "version": "0.0.1",
+  "type": "module",
+  "description": "Stuff made by the Lunal Graphics community",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "node ./src/server.js",
+    "start": "node ./src/server.js"
+  },
+  "author": "Yikuan Sun",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2"
+  }
+}
