@@ -22,6 +22,12 @@ export async function get(req, res) {
         data["id"] = resourceID;
         let infoFilePath = path.resolve(resourcesDir, resourceID, "info.json");
         data["info"] = JSON.parse(fs.readFileSync(infoFilePath));
+        data["assetURL"] = "";
+        if (data["info"]["type"] == "ctpreset") {
+            let xml = fs.readFileSync(path.resolve(resourcesDir, resourceID, "asset.ctxml"));
+            let dataURL = "data:text/xml," + encodeURIComponent(xml);
+            data["assetURL"] = dataURL;
+        }
         output.push(data);
     }
 
@@ -46,6 +52,11 @@ export async function post(req, res) {
         "goldStar": false
     });
     fs.writeFileSync(path.resolve(resourcesDir, resourceID, "info.json"), infoFileContents, "utf-8");
+
+    if (req.body["type"] == "ctpreset") {
+        let assetContents = Buffer.from(req.body["b64"], "base64");
+        fs.writeFileSync(path.resolve(resourcesDir, resourceID, "asset.ctxml"), assetContents, "utf-8");
+    }
 
     return res.status(200).json({
         message: "success",
