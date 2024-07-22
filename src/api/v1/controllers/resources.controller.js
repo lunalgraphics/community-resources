@@ -28,6 +28,11 @@ export async function get(req, res) {
             let dataURL = "data:text/xml," + encodeURIComponent(xml);
             data["assetURL"] = dataURL;
         }
+        else if (data["info"]["type"] == "srtexture") {
+            let b64 = fs.readFileSync(path.resolve(resourcesDir, resourceID, "asset.png"), "base64");
+            let dataURL = "data:image/png;base64," + b64;
+            data["assetURL"] = dataURL;
+        }
         output.push(data);
     }
 
@@ -56,6 +61,10 @@ export async function post(req, res) {
     if (req.body["type"] == "ctpreset") {
         let assetContents = Buffer.from(req.body["b64"], "base64");
         fs.writeFileSync(path.resolve(resourcesDir, resourceID, "asset.ctxml"), assetContents, "utf-8");
+    }
+    else if (req.body["type"] == "srtexture") {
+        let assetContents = Buffer.from(req.body["b64"], "base64");
+        fs.writeFileSync(path.resolve(resourcesDir, resourceID, "asset.png"), assetContents, "utf-8");
     }
 
     return res.status(200).json({
