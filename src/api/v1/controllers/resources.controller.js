@@ -1,8 +1,13 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { Octokit } from "octokit";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+let octo = new Octokit({
+    auth: process.env["GITHUB_TOKEN"],
+});
 
 function getValidRandomID(digits=4, taken=[]) {
     let id = Math.random().toFixed(digits).split(".").pop();
@@ -13,25 +18,23 @@ function getValidRandomID(digits=4, taken=[]) {
 }
 
 export async function get(req, res) {
-    let resourcesDir = path.resolve(__dirname, "../../../../public/resources");
-    let folders = fs.readdirSync(resourcesDir);
+    let folders = (await octo.request("GET /repos/lunalgraphics/community-resources/contents/public/resources")).data;
 
     let output = [];
-    for (let resourceID of folders) {
+    for (let folder of folders) {
         let data = {};
-        data["id"] = resourceID;
-        let infoFilePath = path.resolve(resourcesDir, resourceID, "info.json");
-        data["info"] = JSON.parse(fs.readFileSync(infoFilePath));
+        data["id"] = folder["name"];
+        let infoFile = (await octo.request("GET /repos/lunalgraphics/community-resources/contents/public/resources/" + folder["name"] + "/info.json")).data;
+        let infoString = Buffer.from(infoFile["content"], "base64");
+        data["info"] = JSON.parse(infoString);
         data["assetURL"] = "";
         if (data["info"]["type"] == "ctpreset") {
-            let xml = fs.readFileSync(path.resolve(resourcesDir, resourceID, "asset.ctxml"));
-            let dataURL = "data:text/xml," + encodeURIComponent(xml);
-            data["assetURL"] = dataURL;
+            let assetFile = (await octo.request("GET /repos/lunalgraphics/community-resources/contents/public/resources/" + folder["name"] + "/asset.ctxml")).data;
+            data["assetURL"] = assetFile["download_url"];
         }
         else if (data["info"]["type"] == "srtexture") {
-            let b64 = fs.readFileSync(path.resolve(resourcesDir, resourceID, "asset.png"), "base64");
-            let dataURL = "data:image/png;base64," + b64;
-            data["assetURL"] = dataURL;
+            let assetFile = (await octo.request("GET /repos/lunalgraphics/community-resources/contents/public/resources/" + folder["name"] + "/asset.png")).data;
+            data["assetURL"] = assetFile["download_url"];
         }
         output.push(data);
     }
