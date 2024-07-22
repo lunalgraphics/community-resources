@@ -49,7 +49,7 @@ export async function post(req, res) {
         "type": req.body["type"],
         "author": req.body["author"],
         "description": req.body["description"],
-        "goldStar": false
+        "tier": 1
     });
     fs.writeFileSync(path.resolve(resourcesDir, resourceID, "info.json"), infoFileContents, "utf-8");
 
