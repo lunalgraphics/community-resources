@@ -36,6 +36,9 @@ export async function get(req, res) {
             let assetFile = (await octo.request("GET /repos/lunalgraphics/community-resources/contents/public/resources/" + folder["name"] + "/asset.png")).data;
             data["assetURL"] = assetFile["download_url"];
         }
+        data["thumbnailURL"] = "";
+        let thumbnailFile = (await octo.request("GET /repos/lunalgraphics/community-resources/contents/public/resources/" + folder["name"] + "/thumbnail.png")).data;
+        data["thumbnailURL"] = thumbnailFile["download_url"];
         output.push(data);
     }
 
@@ -116,6 +119,23 @@ export async function post(req, res) {
             },
         });
     }
+
+    await octo.repos.createOrUpdateFileContents({
+        owner: "lunalgraphics",
+        repo: "community-resources",
+        branch: resourceID,
+        path: "public/resources/" + resourceID + "/thumbnail.png",
+        message: "Add thumbnail.png for resource " + resourceID,
+        content: req.body["thumbnail64"],
+        committer: {
+            name: "Lunal Graphics Bot",
+            email: "github-bot@lunalgraphics.com",
+        },
+        author: {
+            name: "Lunal Graphics Bot",
+            email: "github-bot@lunalgraphics.com",
+        },
+    });
 
     await octo.pulls.create({
         owner: "lunalgraphics",
