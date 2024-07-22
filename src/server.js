@@ -4,7 +4,7 @@ import router from "./api/v1/routes/loader.js";
 
 let app = express();
 
-let PORT = process.env["PORT"] || 1995;
+let PORT = process.env["PORT"] || 3000;
 
 app.use(express.json());
 
