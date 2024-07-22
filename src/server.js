@@ -12,4 +12,6 @@ app.use("/api/v1", router);
 
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
-})
+});
+
+export default app;
