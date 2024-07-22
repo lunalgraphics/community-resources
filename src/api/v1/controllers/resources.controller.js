@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { Octokit } from "octokit";
+import { Octokit } from "@octokit/rest";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -46,11 +46,7 @@ export async function get(req, res) {
 }
 
 export async function post(req, res) {
-    let resourcesDir = path.resolve(__dirname, "../../../../public/resources");
-    let folders = fs.readdirSync(resourcesDir);
-
-    let resourceID = getValidRandomID(4, folders);
-    fs.mkdirSync(path.resolve(resourcesDir, resourceID));
+    let resourceID = getValidRandomID(4);
 
     let infoFileContents = JSON.stringify({
         "name": req.body["name"],
@@ -59,15 +55,56 @@ export async function post(req, res) {
         "description": req.body["description"],
         "tier": 1
     });
-    fs.writeFileSync(path.resolve(resourcesDir, resourceID, "info.json"), infoFileContents, "utf-8");
+
+    await octo.repos.createOrUpdateFileContents({
+        owner: "lunalgraphics",
+        repo: "community-resources",
+        path: "public/resources/" + resourceID + "/info.json",
+        message: "Add info.json for resource " + resourceID,
+        content: Buffer.from(infoFileContents).toString("base64"),
+        committer: {
+            name: "Lunal Graphics Bot",
+            email: "github-bot@lunalgraphics.com",
+        },
+        author: {
+            name: "Lunal Graphics Bot",
+            email: "github-bot@lunalgraphics.com",
+        },
+    });
 
     if (req.body["type"] == "ctpreset") {
-        let assetContents = Buffer.from(req.body["b64"], "base64");
-        fs.writeFileSync(path.resolve(resourcesDir, resourceID, "asset.ctxml"), assetContents, "utf-8");
+        await octo.repos.createOrUpdateFileContents({
+            owner: "lunalgraphics",
+            repo: "community-resources",
+            path: "public/resources/" + resourceID + "/asset.ctxml",
+            message: "Add asset.ctxml for resource " + resourceID,
+            content: req.body["b64"],
+            committer: {
+                name: "Lunal Graphics Bot",
+                email: "github-bot@lunalgraphics.com",
+            },
+            author: {
+                name: "Lunal Graphics Bot",
+                email: "github-bot@lunalgraphics.com",
+            },
+        });
     }
     else if (req.body["type"] == "srtexture") {
-        let assetContents = Buffer.from(req.body["b64"], "base64");
-        fs.writeFileSync(path.resolve(resourcesDir, resourceID, "asset.png"), assetContents, "utf-8");
+        await octo.repos.createOrUpdateFileContents({
+            owner: "lunalgraphics",
+            repo: "community-resources",
+            path: "public/resources/" + resourceID + "/asset.png",
+            message: "Add asset.png for resource " + resourceID,
+            content: req.body["b64"],
+            committer: {
+                name: "Lunal Graphics Bot",
+                email: "github-bot@lunalgraphics.com",
+            },
+            author: {
+                name: "Lunal Graphics Bot",
+                email: "github-bot@lunalgraphics.com",
+            },
+        });
     }
 
     return res.status(200).json({
