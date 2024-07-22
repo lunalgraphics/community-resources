@@ -1,19 +1,22 @@
 {
-  "name": "lunalgraphics-communityresources",
-  "version": "0.0.1",
-  "type": "module",
-  "description": "Stuff made by the Lunal Graphics community",
-  "main": "src/server.js",
-  "scripts": {
-    "test": "node ./src/server.js",
-    "start": "node ./src/server.js"
-  },
-  "author": "Yikuan Sun",
-  "license": "UNLICENSED",
-  "dependencies": {
-    "@octokit/rest": "^21.0.1",
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "octokit": "^4.0.2"
-  }
+	"name": "community-resources",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview"
+	},
+	"devDependencies": {
+		"@sveltejs/adapter-auto": "^3.0.0",
+		"@sveltejs/kit": "^2.0.0",
+		"@sveltejs/vite-plugin-svelte": "^3.0.0",
+		"svelte": "^4.2.7",
+		"vite": "^5.0.3"
+	},
+	"type": "module",
+	"dependencies": {
+		"@octokit/rest": "^21.0.1",
+		"octokit": "^4.0.2"
+	}
 }

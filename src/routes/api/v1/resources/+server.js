@@ -1,12 +1,9 @@
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
 import { Octokit } from "@octokit/rest";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import { json } from "@sveltejs/kit";
+import { GITHUB_TOKEN } from "$env/static/private";
 
 let octo = new Octokit({
-    auth: process.env["GITHUB_TOKEN"],
+    auth: GITHUB_TOKEN,
 });
 
 function getValidRandomID(digits=4, taken=[]) {
@@ -17,7 +14,7 @@ function getValidRandomID(digits=4, taken=[]) {
     return id;
 }
 
-export async function get(req, res) {
+export async function GET() {
     let folders = (await octo.request("GET /repos/lunalgraphics/community-resources/contents/public/resources")).data;
 
     let output = [];
@@ -42,13 +39,15 @@ export async function get(req, res) {
         output.push(data);
     }
 
-    return res.status(200).json({
+    return json({
         message: "success",
         data: output,
     });
 }
 
-export async function post(req, res) {
+export async function POST({ request }) {
+    let body = await request.json();
+
     let resourceID = getValidRandomID(4);
 
     await octo.request("POST /repos/lunalgraphics/community-resources/git/refs", {
@@ -59,10 +58,10 @@ export async function post(req, res) {
     });    
 
     let infoFileContents = JSON.stringify({
-        "name": req.body["name"],
-        "type": req.body["type"],
-        "author": req.body["author"],
-        "description": req.body["description"],
+        "name": body["name"],
+        "type": body["type"],
+        "author": body["author"],
+        "description": body["description"],
         "tier": 1
     });
 
@@ -83,14 +82,14 @@ export async function post(req, res) {
         },
     });
 
-    if (req.body["type"] == "ctpreset") {
+    if (body["type"] == "ctpreset") {
         await octo.repos.createOrUpdateFileContents({
             owner: "lunalgraphics",
             repo: "community-resources",
             branch: resourceID,
             path: "public/resources/" + resourceID + "/asset.ctxml",
             message: "Add asset.ctxml for resource " + resourceID,
-            content: req.body["b64"],
+            content: body["b64"],
             committer: {
                 name: "Lunal Graphics Bot",
                 email: "github-bot@lunalgraphics.com",
@@ -101,14 +100,14 @@ export async function post(req, res) {
             },
         });
     }
-    else if (req.body["type"] == "srtexture") {
+    else if (body["type"] == "srtexture") {
         await octo.repos.createOrUpdateFileContents({
             owner: "lunalgraphics",
             repo: "community-resources",
             branch: resourceID,
             path: "public/resources/" + resourceID + "/asset.png",
             message: "Add asset.png for resource " + resourceID,
-            content: req.body["b64"],
+            content: body["b64"],
             committer: {
                 name: "Lunal Graphics Bot",
                 email: "github-bot@lunalgraphics.com",
@@ -126,7 +125,7 @@ export async function post(req, res) {
         branch: resourceID,
         path: "public/resources/" + resourceID + "/thumbnail.png",
         message: "Add thumbnail.png for resource " + resourceID,
-        content: req.body["thumbnail64"],
+        content: body["thumbnail64"],
         committer: {
             name: "Lunal Graphics Bot",
             email: "github-bot@lunalgraphics.com",
@@ -144,14 +143,14 @@ export async function post(req, res) {
         head: resourceID,
         base: "main",
         body: `
-**Resource Type:** ${req.body["type"]}
-**Resource Name:** ${req.body["name"]}
-**Created By:** ${req.body["author"]}
-**Description:** ${req.body["description"]}
+**Resource Type:** ${body["type"]}
+**Resource Name:** ${body["name"]}
+**Created By:** ${body["author"]}
+**Description:** ${body["description"]}
 `,
     });
 
-    return res.status(200).json({
+    return json({
         message: "success",
         data: resourceID,
     });
