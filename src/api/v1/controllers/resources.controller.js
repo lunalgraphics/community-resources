@@ -48,6 +48,13 @@ export async function get(req, res) {
 export async function post(req, res) {
     let resourceID = getValidRandomID(4);
 
+    await octo.request("POST /repos/lunalgraphics/community-resources/git/refs", {
+        owner: "lunalgraphics",
+        repo: "community-resources",
+        ref: "refs/heads/" + resourceID,
+        sha: "b7a9a28a8398386ac2d22aaaec65a6276a4178b5",
+    });    
+
     let infoFileContents = JSON.stringify({
         "name": req.body["name"],
         "type": req.body["type"],
@@ -59,6 +66,7 @@ export async function post(req, res) {
     await octo.repos.createOrUpdateFileContents({
         owner: "lunalgraphics",
         repo: "community-resources",
+        branch: resourceID,
         path: "public/resources/" + resourceID + "/info.json",
         message: "Add info.json for resource " + resourceID,
         content: Buffer.from(infoFileContents).toString("base64"),
@@ -76,6 +84,7 @@ export async function post(req, res) {
         await octo.repos.createOrUpdateFileContents({
             owner: "lunalgraphics",
             repo: "community-resources",
+            branch: resourceID,
             path: "public/resources/" + resourceID + "/asset.ctxml",
             message: "Add asset.ctxml for resource " + resourceID,
             content: req.body["b64"],
@@ -93,6 +102,7 @@ export async function post(req, res) {
         await octo.repos.createOrUpdateFileContents({
             owner: "lunalgraphics",
             repo: "community-resources",
+            branch: resourceID,
             path: "public/resources/" + resourceID + "/asset.png",
             message: "Add asset.png for resource " + resourceID,
             content: req.body["b64"],
@@ -106,6 +116,20 @@ export async function post(req, res) {
             },
         });
     }
+
+    await octo.pulls.create({
+        owner: "lunalgraphics",
+        repo: "community-resources",
+        title: "Add resource #" + resourceID,
+        head: resourceID,
+        base: "main",
+        body: `
+**Resource Type:** ${req.body["type"]}
+**Resource Name:** ${req.body["name"]}
+**Created By:** ${req.body["author"]}
+**Description:** ${req.body["description"]}
+`,
+    });
 
     return res.status(200).json({
         message: "success",
