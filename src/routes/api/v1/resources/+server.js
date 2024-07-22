@@ -150,19 +150,6 @@ export async function POST({ request }) {
 `,
     });
 
-    try {
-        let notification = new URLSearchParams();
-        notification.set("topic", "New submission to Community Resources");
-        notification.set("message", `ID: ${resourceID} \n\n View pull requests at https://github.com/lunalgraphics/community-resources/pulls`);
-        await fetch("https://formspree.io/f/xrgjqgqq", {
-            method: "POST",
-            body: notification,
-        });
-    }
-    catch (err) {
-        console.log(err);
-    }
-
     return json({
         message: "success",
         data: resourceID,
