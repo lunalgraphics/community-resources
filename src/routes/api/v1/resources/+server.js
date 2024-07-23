@@ -67,7 +67,7 @@ export async function POST({ request }) {
         "author": body["author"],
         "description": body["description"],
         "tier": 1
-    });
+    }, null, 4);
 
     await octo.repos.createOrUpdateFileContents({
         owner: "lunalgraphics",
