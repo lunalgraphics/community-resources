@@ -33,6 +33,10 @@ export async function GET() {
             let assetFile = (await octo.request("GET /repos/lunalgraphics/community-resources/contents/public/resources/" + folder["name"] + "/asset.png")).data;
             data["assetURL"] = assetFile["download_url"];
         }
+        else if (data["info"]["type"] == "pgf2preset") {
+            let assetFile = (await octo.request("GET /repos/lunalgraphics/community-resources/contents/public/resources/" + folder["name"] + "/asset.pgf2")).data;
+            data["assetURL"] = assetFile["download_url"];
+        }
         data["thumbnailURL"] = "";
         let thumbnailFile = (await octo.request("GET /repos/lunalgraphics/community-resources/contents/public/resources/" + folder["name"] + "/thumbnail.png")).data;
         data["thumbnailURL"] = thumbnailFile["download_url"];
@@ -107,6 +111,24 @@ export async function POST({ request }) {
             branch: resourceID,
             path: "public/resources/" + resourceID + "/asset.png",
             message: "Add asset.png for resource " + resourceID,
+            content: body["b64"],
+            committer: {
+                name: "Lunal Graphics Bot",
+                email: "github-bot@lunalgraphics.com",
+            },
+            author: {
+                name: "Lunal Graphics Bot",
+                email: "github-bot@lunalgraphics.com",
+            },
+        });
+    }
+    else if (body["type"] == "pgf2preset") {
+        await octo.repos.createOrUpdateFileContents({
+            owner: "lunalgraphics",
+            repo: "community-resources",
+            branch: resourceID,
+            path: "public/resources/" + resourceID + "/asset.pgf2",
+            message: "Add asset.pgf2 for resource " + resourceID,
             content: body["b64"],
             committer: {
                 name: "Lunal Graphics Bot",
