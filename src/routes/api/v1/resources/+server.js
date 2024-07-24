@@ -1,6 +1,7 @@
 import { Octokit } from "@octokit/rest";
 import { json } from "@sveltejs/kit";
 import { GITHUB_TOKEN } from "$env/static/private";
+import Sarlacc from "$lib/Sarlacc.js";
 
 let octo = new Octokit({
     auth: GITHUB_TOKEN,
@@ -18,7 +19,7 @@ export async function GET() {
     let folders = (await octo.request("GET /repos/lunalgraphics/community-resources/contents/public/resources")).data;
 
     let output = [];
-    for (let folder of folders) {
+    let multitasker = new Sarlacc(folders, async () => {
         let data = {};
         data["id"] = folder["name"];
         let infoFile = (await octo.request("GET /repos/lunalgraphics/community-resources/contents/public/resources/" + folder["name"] + "/info.json")).data;
@@ -40,8 +41,10 @@ export async function GET() {
         data["thumbnailURL"] = "";
         let thumbnailFile = (await octo.request("GET /repos/lunalgraphics/community-resources/contents/public/resources/" + folder["name"] + "/thumbnail.png")).data;
         data["thumbnailURL"] = thumbnailFile["download_url"];
-        output.push(data);
-    }
+        return data;
+    }, Math.ceil(folders.length / 2));
+
+    output = await multitasker.run();
 
     return json({
         message: "success",
