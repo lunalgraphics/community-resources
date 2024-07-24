@@ -24,7 +24,7 @@ class Sarlacc {
     numWorkers = 1;
     _workers = [];
     outputs = [];
-    _workerOutputs = [];
+    _workerOutputs = {};
 
     constructor(tasks, command, numWorkers) {
         this.outputs = [];
@@ -51,12 +51,19 @@ class Sarlacc {
     }
 
     async run() {
-        this._workerOutputs = [];
+        this._workerOutputs = {};
+        for (let i = 0; i < this._workers.length; i++) {
+            this._workerOutputs[i] = {
+                completed: false,
+                data: [],
+            };
+        }
         await new Promise((res, rej) => {
             for (let i = 0; i < this._workers.length; i++) {
                 this._workers[i].run().then((output) => {
-                    this._workerOutputs[i] = output;
-                    if (this._workerOutputs.length == this._workers.length) {
+                    this._workerOutputs[i]["data"] = output;
+                    this._workerOutputs[i]["completed"] = true;
+                    if (this._allWorkersFinished()) {
                         res();
                     }
                 });
@@ -64,11 +71,21 @@ class Sarlacc {
         });
 
         this.outputs = [];
-        for (let out of this._workerOutputs) {
-            this.outputs = [...this.outputs, ...out];
+        for (let key in this._workerOutputs) {
+            let out = this._workerOutputs[key];
+            this.outputs = [...this.outputs, ...(out["data"])];
         }
 
         return this.outputs;
+    }
+
+    _allWorkersFinished() {
+        for (let key in this._workerOutputs) {
+            if (!this._workerOutputs[key]["completed"]) {
+                return false;
+            }
+        }
+        return true;
     }
 }
 

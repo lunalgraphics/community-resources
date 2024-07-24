@@ -19,7 +19,7 @@ export async function GET() {
     let folders = (await octo.request("GET /repos/lunalgraphics/community-resources/contents/public/resources")).data;
 
     let output = [];
-    let multitasker = new Sarlacc(folders, async () => {
+    let multitasker = new Sarlacc(folders, async (folder) => {
         let data = {};
         data["id"] = folder["name"];
         let infoFile = (await octo.request("GET /repos/lunalgraphics/community-resources/contents/public/resources/" + folder["name"] + "/info.json")).data;
@@ -42,7 +42,7 @@ export async function GET() {
         let thumbnailFile = (await octo.request("GET /repos/lunalgraphics/community-resources/contents/public/resources/" + folder["name"] + "/thumbnail.png")).data;
         data["thumbnailURL"] = thumbnailFile["download_url"];
         return data;
-    }, Math.ceil(folders.length / 2));
+    });
 
     output = await multitasker.run();
 
