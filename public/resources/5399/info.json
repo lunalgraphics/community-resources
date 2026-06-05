@@ -1,0 +1,7 @@
+{
+    "name": "Test Resource",
+    "type": "ctpreset",
+    "author": "TestUser",
+    "description": "A test resource submission",
+    "tier": 1
+}
