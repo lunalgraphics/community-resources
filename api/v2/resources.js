@@ -4,6 +4,19 @@ import dotenv from "dotenv";
 
 dotenv.config({ path: ".env.local" });
 
+const corsHeaders = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+};
+
+export async function OPTIONS() {
+    return new Response(null, {
+        status: 204,
+        headers: corsHeaders,
+    });
+}
+
 let octo = new Octokit({
     auth: process.env.GITHUB_TOKEN,
 });
@@ -54,7 +67,7 @@ export async function GET() {
         status: 200,
         headers: {
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
+            ...corsHeaders,
         }
     });
 }
@@ -189,7 +202,7 @@ export async function POST(request) {
         status: 200,
         headers: {
             "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
+            ...corsHeaders,
         }
     });
 }
