@@ -58,11 +58,15 @@ export async function POST(request) {
     const currentData = JSON.parse(raw);
     let resourceID = String(currentData.data.length);
 
+    // Get the current SHA of main to branch from
+    let mainRef = await octo.request("GET /repos/lunalgraphics/community-resources/git/ref/heads/main");
+    let mainSha = mainRef.data.object.sha;
+
     await octo.request("POST /repos/lunalgraphics/community-resources/git/refs", {
         owner: "lunalgraphics",
         repo: "community-resources",
         ref: "refs/heads/" + resourceID,
-        sha: "b7a9a28a8398386ac2d22aaaec65a6276a4178b5",
+        sha: mainSha,
     });    
 
     let infoFileContents = JSON.stringify({
