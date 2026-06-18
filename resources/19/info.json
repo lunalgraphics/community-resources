@@ -1,7 +1,7 @@
 {
-    "name": "White Pixel",
-    "type": "srtexture",
-    "author": "Test File",
-    "description": "Literally just a white pixel.",
+    "name": "Old Photo (Legacy)",
+    "type": "ctpreset",
+    "author": "yikuans",
+    "description": "A Color Theater legacy preset.",
     "tier": 1
 }
