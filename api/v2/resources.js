@@ -56,11 +56,27 @@ export async function POST(request) {
     const dataPath = join(process.cwd(), "data.json");
     const raw = await readFile(dataPath, "utf-8");
     const currentData = JSON.parse(raw);
-    let resourceID = String(currentData.data.length);
+    let resourceID = currentData.data.length > 0
+        ? currentData.data[currentData.data.length - 1].id + 1
+        : 0;
 
     // Get the current SHA of main to branch from
     let mainRef = await octo.request("GET /repos/lunalgraphics/community-resources/git/ref/heads/main");
     let mainSha = mainRef.data.object.sha;
+
+    // Find a free branch name by incrementing if the branch already exists
+    while (true) {
+        try {
+            await octo.request("GET /repos/lunalgraphics/community-resources/git/ref/heads/" + resourceID);
+            // Branch exists, try next ID
+            resourceID++;
+        } catch {
+            // Branch doesn't exist, we can use this ID
+            break;
+        }
+    }
+
+    resourceID = String(resourceID);
 
     await octo.request("POST /repos/lunalgraphics/community-resources/git/refs", {
         owner: "lunalgraphics",
