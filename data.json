@@ -218,7 +218,7 @@
       "thumbnailURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/17/thumbnail.png"
     },
     {
-      "id": 18,
+      "id": 19,
       "info": {
         "name": "Old Photo (Legacy)",
         "type": "ctpreset",
@@ -226,19 +226,7 @@
         "description": "A Color Theater legacy preset.",
         "tier": 1
       },
-      "assetURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/18/asset.ctxml",
-      "thumbnailURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/18/thumbnail.png"
-    },
-    {
-      "id": 19,
-      "info": {
-        "name": "White Pixel",
-        "type": "srtexture",
-        "author": "Test File",
-        "description": "Literally just a white pixel.",
-        "tier": 1
-      },
-      "assetURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/19/asset.png",
+      "assetURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/19/asset.ctxml",
       "thumbnailURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/19/thumbnail.png"
     }
   ]
