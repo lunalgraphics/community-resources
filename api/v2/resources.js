@@ -22,14 +22,6 @@ let octo = new Octokit({
     auth: process.env.GITHUB_TOKEN,
 });
 
-function getValidRandomID(digits=4, taken=[]) {
-    let id = Math.random().toFixed(digits).split(".").pop();
-    if (taken.includes(id)) {
-        id = getValidRandomID(digits, taken);
-    }
-    return id;
-}
-
 export async function GET() {
     try {
         const dataPath = join(process.cwd(), "data.json");
@@ -60,7 +52,11 @@ export async function GET() {
 export async function POST(request) {
     let body = await request.json();
 
-    let resourceID = getValidRandomID(4);
+    // Read current data to determine next sequential ID
+    const dataPath = join(process.cwd(), "data.json");
+    const raw = await readFile(dataPath, "utf-8");
+    const currentData = JSON.parse(raw);
+    let resourceID = String(currentData.data.length);
 
     await octo.request("POST /repos/lunalgraphics/community-resources/git/refs", {
         owner: "lunalgraphics",

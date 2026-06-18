@@ -12,14 +12,15 @@ const ASSET_FILENAMES = {
 async function buildData() {
     const resourcesDir = join(process.cwd(), "resources");
     const folders = await readdir(resourcesDir, { withFileTypes: true });
+    const dirs = folders
+        .filter(f => f.isDirectory())
+        .sort((a, b) => Number(a.name) - Number(b.name));
 
     const resources = [];
 
-    for (const folder of folders) {
-        if (!folder.isDirectory()) continue;
-
-        const id = folder.name;
-        const infoPath = join(resourcesDir, id, "info.json");
+    for (const folder of dirs) {
+        const id = Number(folder.name);
+        const infoPath = join(resourcesDir, folder.name, "info.json");
 
         let info;
         try {
@@ -32,14 +33,14 @@ async function buildData() {
 
         const assetFilename = ASSET_FILENAMES[info.type];
         const assetURL = assetFilename
-            ? `${REPO_RAW_BASE}/${id}/${assetFilename}`
+            ? `${REPO_RAW_BASE}/${folder.name}/${assetFilename}`
             : "";
 
         resources.push({
             id,
             info,
             assetURL,
-            thumbnailURL: `${REPO_RAW_BASE}/${id}/thumbnail.png`,
+            thumbnailURL: `${REPO_RAW_BASE}/${folder.name}/thumbnail.png`,
         });
     }
 
