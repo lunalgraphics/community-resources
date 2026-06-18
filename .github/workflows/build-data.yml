@@ -1,0 +1,25 @@
+name: Build Resource Index
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "resources/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate data.json
+        run: |
+          node scripts/build-data.js
+
+      - name: Commit data.json
+        run: |
+          git config user.name "Lunal Graphics Bot"
+          git config user.email "github-bot@lunalgraphics.com"
+          git add data.json
+          git diff --cached --quiet || git commit -m "Rebuild data.json"
+          git push

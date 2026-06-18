@@ -1,5 +1,6 @@
 import { Octokit } from "@octokit/rest";
-import Sarlacc from "./Sarlacc.js";
+import { readFile } from "fs/promises";
+import { join } from "path";
 import dotenv from "dotenv";
 
 dotenv.config({ path: ".env.local" });
@@ -30,46 +31,30 @@ function getValidRandomID(digits=4, taken=[]) {
 }
 
 export async function GET() {
-    let folders = (await octo.request("GET /repos/lunalgraphics/community-resources/contents/resources")).data;
+    try {
+        const dataPath = join(process.cwd(), "data.json");
+        const raw = await readFile(dataPath, "utf-8");
+        const data = JSON.parse(raw);
 
-    let output = [];
-    let multitasker = new Sarlacc(folders, async (folder) => {
-        let data = {};
-        data["id"] = folder["name"];
-        let infoFile = (await octo.request("GET /repos/lunalgraphics/community-resources/contents/resources/" + folder["name"] + "/info.json")).data;
-        let infoString = Buffer.from(infoFile["content"], "base64");
-        data["info"] = JSON.parse(infoString);
-        data["assetURL"] = "";
-        if (data["info"]["type"] == "ctpreset") {
-            let assetFile = (await octo.request("GET /repos/lunalgraphics/community-resources/contents/resources/" + folder["name"] + "/asset.ctxml")).data;
-            data["assetURL"] = assetFile["download_url"];
-        }
-        else if (data["info"]["type"] == "srtexture") {
-            let assetFile = (await octo.request("GET /repos/lunalgraphics/community-resources/contents/resources/" + folder["name"] + "/asset.png")).data;
-            data["assetURL"] = assetFile["download_url"];
-        }
-        else if (data["info"]["type"] == "pgf2preset") {
-            let assetFile = (await octo.request("GET /repos/lunalgraphics/community-resources/contents/resources/" + folder["name"] + "/asset.pgf2")).data;
-            data["assetURL"] = assetFile["download_url"];
-        }
-        data["thumbnailURL"] = "";
-        let thumbnailFile = (await octo.request("GET /repos/lunalgraphics/community-resources/contents/resources/" + folder["name"] + "/thumbnail.png")).data;
-        data["thumbnailURL"] = thumbnailFile["download_url"];
-        return data;
-    });
-
-    output = await multitasker.run();
-
-    return new Response(JSON.stringify({
-        message: "success",
-        data: output,
-    }), {
-        status: 200,
-        headers: {
-            "Content-Type": "application/json",
-            ...corsHeaders,
-        }
-    });
+        return new Response(JSON.stringify(data), {
+            status: 200,
+            headers: {
+                "Content-Type": "application/json",
+                ...corsHeaders,
+            },
+        });
+    } catch (err) {
+        return new Response(JSON.stringify({
+            message: "error",
+            error: "Failed to read resource index",
+        }), {
+            status: 500,
+            headers: {
+                "Content-Type": "application/json",
+                ...corsHeaders,
+            },
+        });
+    }
 }
 
 export async function POST(request) {

@@ -1,0 +1,233 @@
+{
+  "message": "success",
+  "data": [
+    {
+      "id": "0424",
+      "info": {
+        "name": "Warm Dream (Legacy)",
+        "type": "ctpreset",
+        "author": "yikuans",
+        "description": "A Color Theater legacy preset.",
+        "tier": 1
+      },
+      "assetURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/0424/asset.ctxml",
+      "thumbnailURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/0424/thumbnail.png"
+    },
+    {
+      "id": "0542",
+      "info": {
+        "name": "Dusk (Legacy)",
+        "type": "ctpreset",
+        "author": "yikuans",
+        "description": "A Color Theater legacy preset.",
+        "tier": 1
+      },
+      "assetURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/0542/asset.ctxml",
+      "thumbnailURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/0542/thumbnail.png"
+    },
+    {
+      "id": "0902",
+      "info": {
+        "name": "Fires (Legacy)",
+        "type": "ctpreset",
+        "author": "yikuans",
+        "description": "A Color Theater legacy preset.",
+        "tier": 1
+      },
+      "assetURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/0902/asset.ctxml",
+      "thumbnailURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/0902/thumbnail.png"
+    },
+    {
+      "id": "1246",
+      "info": {
+        "name": "Green and Blue (Legacy)",
+        "type": "ctpreset",
+        "author": "yikuans",
+        "description": "A Color Theater legacy preset.",
+        "tier": 1
+      },
+      "assetURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/1246/asset.ctxml",
+      "thumbnailURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/1246/thumbnail.png"
+    },
+    {
+      "id": "1657",
+      "info": {
+        "name": "Calm (Legacy)",
+        "type": "ctpreset",
+        "author": "yikuans",
+        "description": "A Color Theater legacy preset.",
+        "tier": 1
+      },
+      "assetURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/1657/asset.ctxml",
+      "thumbnailURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/1657/thumbnail.png"
+    },
+    {
+      "id": "1960",
+      "info": {
+        "name": "War (Legacy)",
+        "type": "ctpreset",
+        "author": "yikuans",
+        "description": "A Color Theater legacy preset.",
+        "tier": 1
+      },
+      "assetURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/1960/asset.ctxml",
+      "thumbnailURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/1960/thumbnail.png"
+    },
+    {
+      "id": "2024",
+      "info": {
+        "name": "American Anamorphic",
+        "type": "pgf2preset",
+        "author": "yikuans",
+        "description": "A red, white, and blue flare inspired by Heat.",
+        "tier": 1
+      },
+      "assetURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/2024/asset.pgf2",
+      "thumbnailURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/2024/thumbnail.png"
+    },
+    {
+      "id": "2485",
+      "info": {
+        "name": "Red and Green (Legacy)",
+        "type": "ctpreset",
+        "author": "yikuans",
+        "description": "A Color Theater legacy preset.",
+        "tier": 1
+      },
+      "assetURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/2485/asset.ctxml",
+      "thumbnailURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/2485/thumbnail.png"
+    },
+    {
+      "id": "3271",
+      "info": {
+        "name": "Spark",
+        "type": "srtexture",
+        "author": "yikuans",
+        "description": "Make fires look hotter by adding sparks.",
+        "tier": 1
+      },
+      "assetURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/3271/asset.png",
+      "thumbnailURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/3271/thumbnail.png"
+    },
+    {
+      "id": "4099",
+      "info": {
+        "name": "Ocean Smell (Legacy)",
+        "type": "ctpreset",
+        "author": "yikuans",
+        "description": "A Color Theater legacy preset.",
+        "tier": 1
+      },
+      "assetURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/4099/asset.ctxml",
+      "thumbnailURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/4099/thumbnail.png"
+    },
+    {
+      "id": "4563",
+      "info": {
+        "name": "Dark Room (Legacy)",
+        "type": "ctpreset",
+        "author": "yikuans",
+        "description": "A Color Theater legacy preset.",
+        "tier": 1
+      },
+      "assetURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/4563/asset.ctxml",
+      "thumbnailURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/4563/thumbnail.png"
+    },
+    {
+      "id": "5004",
+      "info": {
+        "name": "Cold Dream (Legacy)",
+        "type": "ctpreset",
+        "author": "yikuans",
+        "description": "A Color Theater legacy preset.",
+        "tier": 1
+      },
+      "assetURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/5004/asset.ctxml",
+      "thumbnailURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/5004/thumbnail.png"
+    },
+    {
+      "id": "6527",
+      "info": {
+        "name": "Red and Blue (Legacy)",
+        "type": "ctpreset",
+        "author": "yikuans",
+        "description": "A Color Theater legacy preset.",
+        "tier": 1
+      },
+      "assetURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/6527/asset.ctxml",
+      "thumbnailURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/6527/thumbnail.png"
+    },
+    {
+      "id": "6986",
+      "info": {
+        "name": "Vivid Vision (Legacy)",
+        "type": "ctpreset",
+        "author": "yikuans",
+        "description": "A Color Theater legacy preset.",
+        "tier": 1
+      },
+      "assetURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/6986/asset.ctxml",
+      "thumbnailURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/6986/thumbnail.png"
+    },
+    {
+      "id": "7624",
+      "info": {
+        "name": "Desaturated (Legacy)",
+        "type": "ctpreset",
+        "author": "yikuans",
+        "description": "A Color Theater legacy preset.",
+        "tier": 1
+      },
+      "assetURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/7624/asset.ctxml",
+      "thumbnailURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/7624/thumbnail.png"
+    },
+    {
+      "id": "7825",
+      "info": {
+        "name": "Simulation Theory (Legacy)",
+        "type": "ctpreset",
+        "author": "yikuans",
+        "description": "A Color Theater legacy preset.",
+        "tier": 1
+      },
+      "assetURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/7825/asset.ctxml",
+      "thumbnailURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/7825/thumbnail.png"
+    },
+    {
+      "id": "8740",
+      "info": {
+        "name": "Blues (Legacy)",
+        "type": "ctpreset",
+        "author": "yikuans",
+        "description": "A Color Theater legacy preset.",
+        "tier": 1
+      },
+      "assetURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/8740/asset.ctxml",
+      "thumbnailURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/8740/thumbnail.png"
+    },
+    {
+      "id": "9094",
+      "info": {
+        "name": "Gold and Teal (Legacy)",
+        "type": "ctpreset",
+        "author": "yikuans",
+        "description": "A Color Theater legacy preset.",
+        "tier": 1
+      },
+      "assetURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/9094/asset.ctxml",
+      "thumbnailURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/9094/thumbnail.png"
+    },
+    {
+      "id": "9183",
+      "info": {
+        "name": "Old Photo (Legacy)",
+        "type": "ctpreset",
+        "author": "yikuans",
+        "description": "A Color Theater legacy preset.",
+        "tier": 1
+      },
+      "assetURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/9183/asset.ctxml",
+      "thumbnailURL": "https://raw.githubusercontent.com/lunalgraphics/community-resources/main/resources/9183/thumbnail.png"
+    }
+  ]
+}
